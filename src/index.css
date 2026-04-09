@@ -1,50 +1,70 @@
 @import "tailwindcss";
 
-@theme {
-  --color-vice-bg: #0a0a0a;
-  --color-vice-card: #111111;
-  --color-vice-border: #1e1e1e;
-  --color-vice-accent: #dc2626;
-  --color-vice-accent-dim: #991b1b;
-  --color-vice-gold: #d4a017;
-  --color-vice-muted: #6b7280;
-  --color-vice-text: #e5e5e5;
-  --color-vice-smoke: #1c1917;
-  --color-vice-ember: #f97316;
-
-  --font-family-vice: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-family-vice-serif: 'Playfair Display', Georgia, serif;
+/* ─── Vices Color Tokens ─────────────────────────────── */
+:root {
+  --vice-bg:         #0a0a0a;
+  --vice-card:       #111111;
+  --vice-border:     #1e1e1e;
+  --vice-accent:     #dc2626;
+  --vice-accent-dim: #991b1b;
+  --vice-gold:       #d4a017;
+  --vice-muted:      #6b7280;
+  --vice-text:       #e5e5e5;
+  --vice-smoke:      #1c1917;
+  --vice-ember:      #f97316;
 }
 
+/* ─── Vices Utility Classes ──────────────────────────── */
+@layer utilities {
+  /* backgrounds */
+  .bg-vice-bg          { background-color: var(--vice-bg); }
+  .bg-vice-card        { background-color: var(--vice-card); }
+  .bg-vice-smoke       { background-color: var(--vice-smoke); }
+  .bg-vice-accent      { background-color: var(--vice-accent); }
+  .bg-vice-accent-dim  { background-color: var(--vice-accent-dim); }
+  .bg-vice-border      { background-color: var(--vice-border); }
+  .bg-vice-gold        { background-color: var(--vice-gold); }
+
+  /* text */
+  .text-vice-text      { color: var(--vice-text); }
+  .text-vice-muted     { color: var(--vice-muted); }
+  .text-vice-accent    { color: var(--vice-accent); }
+  .text-vice-gold      { color: var(--vice-gold); }
+  .text-vice-ember     { color: var(--vice-ember); }
+
+  /* borders */
+  .border-vice-border  { border-color: var(--vice-border); }
+  .border-vice-accent  { border-color: var(--vice-accent); }
+  .border-vice-gold    { border-color: var(--vice-gold); }
+
+  /* ring */
+  .ring-vice-accent    { --tw-ring-color: var(--vice-accent); }
+
+  /* divide */
+  .divide-vice-border > * + * { border-color: var(--vice-border); }
+
+  /* font families */
+  .font-vice           { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+  .font-vice-serif     { font-family: 'Playfair Display', Georgia, serif; }
+}
+
+/* ─── Base Styles ────────────────────────────────────── */
 * {
   box-sizing: border-box;
 }
 
 body {
-  background-color: #0a0a0a;
-  color: #e5e5e5;
+  background-color: var(--vice-bg);
+  color: var(--vice-text);
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-::-webkit-scrollbar {
-  width: 5px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 3px;
-}
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
 
-::selection {
-  background: #dc2626;
-  color: white;
-}
+::selection { background: var(--vice-accent); color: white; }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+a { color: inherit; text-decoration: none; }

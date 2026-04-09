@@ -60,3 +60,9 @@ dist-ssr
 *.sw?
 
 .vercel
+
+# Capacitor
+capacitor.config.json.bak
+ios/
+android/
+.capacitor

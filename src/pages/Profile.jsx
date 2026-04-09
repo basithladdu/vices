@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { FaFire, FaMapMarkerAlt, FaStar, FaCalendarAlt, FaPlus } from 'react-icons/fa'
+import { FaStar, FaPlus } from 'react-icons/fa'
 import { getSubstanceById, TYPE_META, MOODS } from '../data/substances'
 import LogCard from '../components/LogCard'
 import Footer from '../components/Footer'
@@ -14,7 +14,6 @@ const Profile = () => {
     setLogs(saved)
   }, [])
 
-  // Stats
   const stats = useMemo(() => {
     if (logs.length === 0) return null
 
@@ -38,70 +37,74 @@ const Profile = () => {
 
     const topSubstance = Object.entries(substanceCounts).sort((a, b) => b[1] - a[1])[0]
     const topMood = Object.entries(moodCounts).sort((a, b) => b[1] - a[1])[0]
-    const topLocation = Object.entries(locationCounts).sort((a, b) => b[1] - a[1])[0]
 
     return {
       total: logs.length,
       typeCounts,
       topSubstance: topSubstance ? topSubstance[0] : null,
       topMood: topMood ? MOODS.find((m) => m.id === topMood[0]) : null,
-      topLocation: topLocation ? topLocation[0] : null,
       avgRating: ratedCount > 0 ? (totalRating / ratedCount).toFixed(1) : null,
     }
   }, [logs])
 
   return (
     <div className="min-h-screen bg-vice-bg pt-20 pb-24">
-      <div className="max-w-2xl mx-auto px-4">
-        {/* Profile header */}
-        <div className="text-center mb-10">
-          <div className="w-20 h-20 rounded-full bg-vice-card border-2 border-vice-accent/30 flex items-center justify-center text-3xl mx-auto mb-4">
-            <FaFire className="text-vice-accent" />
-          </div>
-          <h1 className="text-2xl font-bold text-white">Your Archive</h1>
-          <p className="text-vice-muted text-sm mt-1 italic font-[family-name:var(--font-vice-serif)]">
-            "What is a vice if it doesn't consume you"
-          </p>
-        </div>
+      <div className="max-w-7xl mx-auto px-4">
+        {/* Header */}
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <h1 className="text-display-md text-vice-text mb-3">Your Archive</h1>
+          <blockquote className="border-l-2 border-vice-accent pl-4 inline-block">
+            <p className="text-body-lg text-vice-text italic font-light">
+              "What is a vice if it doesn't consume you"
+            </p>
+          </blockquote>
+        </motion.div>
 
-        {/* Stats */}
+        {/* Content */}
         {stats ? (
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.1 }}
           >
-            {/* Stats grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-              <div className="p-4 bg-vice-card border border-vice-border rounded-xl text-center">
-                <p className="text-2xl font-bold text-white">{stats.total}</p>
-                <p className="text-vice-muted text-[10px] uppercase tracking-wider mt-1">Moments</p>
+            {/* Stats Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+              <div className="p-6 bg-vice-card border border-vice-border text-center">
+                <p className="text-4xl font-light text-vice-accent">{stats.total}</p>
+                <p className="text-body-sm text-vice-text-muted mt-2 uppercase tracking-widest">Moments</p>
               </div>
               {stats.topSubstance && (
-                <div className="p-4 bg-vice-card border border-vice-border rounded-xl text-center">
-                  <p className="text-sm font-bold text-white truncate">{stats.topSubstance}</p>
-                  <p className="text-vice-muted text-[10px] uppercase tracking-wider mt-1">Most Logged</p>
+                <div className="p-6 bg-vice-card border border-vice-border text-center">
+                  <p className="text-heading-md text-vice-text truncate">{stats.topSubstance}</p>
+                  <p className="text-body-sm text-vice-text-muted mt-2 uppercase tracking-widest">Most Logged</p>
                 </div>
               )}
               {stats.topMood && (
-                <div className="p-4 bg-vice-card border border-vice-border rounded-xl text-center">
-                  <p className="text-lg">{stats.topMood.emoji}</p>
-                  <p className="text-vice-muted text-[10px] uppercase tracking-wider mt-1">{stats.topMood.label}</p>
+                <div className="p-6 bg-vice-card border border-vice-border text-center">
+                  <p className="text-3xl mb-2">{stats.topMood.emoji}</p>
+                  <p className="text-body-sm text-vice-text-muted uppercase tracking-widest">{stats.topMood.label}</p>
                 </div>
               )}
               {stats.avgRating && (
-                <div className="p-4 bg-vice-card border border-vice-border rounded-xl text-center">
-                  <p className="text-2xl font-bold text-vice-gold flex items-center justify-center gap-1">
-                    {stats.avgRating} <FaStar size={12} />
-                  </p>
-                  <p className="text-vice-muted text-[10px] uppercase tracking-wider mt-1">Avg Rating</p>
+                <div className="p-6 bg-vice-card border border-vice-border text-center">
+                  <div className="flex items-center justify-center gap-2">
+                    <p className="text-4xl font-light text-vice-gold">{stats.avgRating}</p>
+                    <FaStar className="text-vice-gold" />
+                  </div>
+                  <p className="text-body-sm text-vice-text-muted mt-2 uppercase tracking-widest">Avg Rating</p>
                 </div>
               )}
             </div>
 
-            {/* Substance Identity (type breakdown) */}
-            <div className="bg-vice-card border border-vice-border rounded-xl p-5 mb-8">
-              <h3 className="text-white font-semibold text-sm mb-4">Your Substance Identity</h3>
-              <div className="space-y-3">
+            {/* Substance Identity */}
+            <div className="bg-vice-card border border-vice-border p-8 mb-12">
+              <h2 className="text-heading-lg text-vice-text mb-6">Your Substance Identity</h2>
+              <div className="space-y-4">
                 {Object.entries(stats.typeCounts)
                   .sort((a, b) => b[1] - a[1])
                   .map(([type, count]) => {
@@ -109,18 +112,19 @@ const Profile = () => {
                     const pct = Math.round((count / stats.total) * 100)
                     return (
                       <div key={type}>
-                        <div className="flex items-center justify-between text-xs mb-1">
-                          <span className="text-vice-text flex items-center gap-1.5">
-                            {meta?.icon} {meta?.label}
+                        <div className="flex items-center justify-between text-body-sm mb-2">
+                          <span className="text-vice-text flex items-center gap-2">
+                            <span className="text-lg">{meta?.icon}</span>
+                            {meta?.label}
                           </span>
-                          <span className="text-vice-muted">{count} ({pct}%)</span>
+                          <span className="text-vice-text-muted">{count} ({pct}%)</span>
                         </div>
-                        <div className="w-full h-1.5 bg-vice-border rounded-full overflow-hidden">
+                        <div className="w-full h-2 bg-vice-border overflow-hidden">
                           <motion.div
                             initial={{ width: 0 }}
                             animate={{ width: `${pct}%` }}
                             transition={{ duration: 0.8 }}
-                            className="h-full rounded-full"
+                            className="h-full"
                             style={{ backgroundColor: meta?.color }}
                           />
                         </div>
@@ -130,29 +134,36 @@ const Profile = () => {
               </div>
             </div>
 
-            {/* Recent logs */}
-            <h3 className="text-white font-semibold text-sm mb-4">Recent Moments</h3>
-            <div className="space-y-3">
-              {logs.slice(0, 10).map((log) => {
-                const substance = getSubstanceById(log.substance_id)
-                if (!substance) return null
-                return <LogCard key={log.id} log={log} substance={substance} />
-              })}
+            {/* Recent Moments */}
+            <div className="mb-12">
+              <h2 className="text-heading-lg text-vice-text mb-6">Recent Moments</h2>
+              <div className="space-y-6">
+                {logs.slice(0, 10).map((log) => {
+                  const substance = getSubstanceById(log.substance_id)
+                  if (!substance) return null
+                  return <LogCard key={log.id} log={log} substance={substance} />
+                })}
+              </div>
             </div>
           </motion.div>
         ) : (
-          <div className="text-center py-16">
-            <p className="text-vice-muted text-lg mb-2">No moments yet</p>
-            <p className="text-vice-muted/50 text-sm mb-6">
+          <motion.div
+            className="text-center py-24"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h2 className="text-heading-lg text-vice-text mb-3">No moments yet</h2>
+            <p className="text-body-md text-vice-text-muted mb-8">
               Start logging to build your personal substance identity.
             </p>
             <Link
               to="/log"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-vice-accent text-white rounded-xl text-sm font-semibold"
+              className="btn-vice-primary inline-block"
             >
-              <FaPlus size={10} /> Log Your First Moment
+              Log Your First Moment
             </Link>
-          </div>
+          </motion.div>
         )}
       </div>
 

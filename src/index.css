@@ -1,17 +1,33 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
 
-/* ─── Vices Color Tokens ─────────────────────────────── */
+/* ─── Literary Zine: Vices Color Tokens ────────────────── */
 :root {
-  --vice-bg:         #0a0a0a;
-  --vice-card:       #111111;
-  --vice-border:     #1e1e1e;
-  --vice-accent:     #dc2626;
-  --vice-accent-dim: #991b1b;
-  --vice-gold:       #d4a017;
-  --vice-muted:      #6b7280;
-  --vice-text:       #e5e5e5;
-  --vice-smoke:      #1c1917;
-  --vice-ember:      #f97316;
+  /* Charcoal & Black */
+  --vice-bg:         #1a1a1a;
+  --vice-card:       #242424;
+  --vice-border:     #3a3a3a;
+
+  /* Burgundy Accent */
+  --vice-accent:     #8b3a3a;
+  --vice-accent-dim: #6b2e2e;
+  --vice-accent-light: #a94d4d;
+
+  /* Cream & Text */
+  --vice-text:       #f5f1eb;
+  --vice-text-muted: #d4cec4;
+  --vice-muted:      #8b8b8b;
+
+  /* Earthy Category Colors */
+  --vice-smoke:      #3d3228;
+  --vice-ember:      #a0522d;
+  --vice-gold:       #9b8b6f;
+  --vice-sage:       #6b7d6a;
+  --vice-slate:      #5a6b7a;
+
+  /* Typography */
+  --font-display:    'Bodoni MT', 'Noto Serif', Georgia, serif;
+  --font-body:       'IBM Plex Sans', system-ui, -apple-system, sans-serif;
 }
 
 /* ─── Vices Utility Classes ──────────────────────────── */
@@ -24,6 +40,9 @@
   .bg-vice-accent-dim  { background-color: var(--vice-accent-dim); }
   .bg-vice-border      { background-color: var(--vice-border); }
   .bg-vice-gold        { background-color: var(--vice-gold); }
+  .bg-vice-sage        { background-color: var(--vice-sage); }
+  .bg-vice-slate       { background-color: var(--vice-slate); }
+  .bg-vice-ember       { background-color: var(--vice-ember); }
 
   /* text */
   .text-vice-text      { color: var(--vice-text); }
@@ -31,6 +50,8 @@
   .text-vice-accent    { color: var(--vice-accent); }
   .text-vice-gold      { color: var(--vice-gold); }
   .text-vice-ember     { color: var(--vice-ember); }
+  .text-vice-sage      { color: var(--vice-sage); }
+  .text-vice-slate     { color: var(--vice-slate); }
 
   /* borders */
   .border-vice-border  { border-color: var(--vice-border); }
@@ -44,8 +65,126 @@
   .divide-vice-border > * + * { border-color: var(--vice-border); }
 
   /* font families */
-  .font-vice           { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
-  .font-vice-serif     { font-family: 'Playfair Display', Georgia, serif; }
+  .font-display        { font-family: var(--font-display); }
+  .font-body           { font-family: var(--font-body); }
+  .font-vice           { font-family: var(--font-body); }
+
+  /* typography scales */
+  .text-display-lg     { font-family: var(--font-display); font-size: 3.5rem; font-weight: 400; line-height: 1.1; letter-spacing: -0.02em; }
+  .text-display-md     { font-family: var(--font-display); font-size: 2.8rem; font-weight: 400; line-height: 1.2; letter-spacing: -0.01em; }
+  .text-display-sm     { font-family: var(--font-display); font-size: 2rem; font-weight: 400; line-height: 1.3; }
+
+  .text-heading-xl     { font-family: var(--font-display); font-size: 1.875rem; font-weight: 600; line-height: 1.3; }
+  .text-heading-lg     { font-family: var(--font-body); font-size: 1.5rem; font-weight: 600; line-height: 1.4; letter-spacing: -0.005em; }
+  .text-heading-md     { font-family: var(--font-body); font-size: 1.25rem; font-weight: 600; line-height: 1.5; }
+  .text-heading-sm     { font-family: var(--font-body); font-size: 1rem; font-weight: 600; letter-spacing: 0.02em; text-transform: uppercase; }
+
+  .text-body-lg        { font-family: var(--font-body); font-size: 1.0625rem; font-weight: 400; line-height: 1.6; }
+  .text-body-md        { font-family: var(--font-body); font-size: 0.9375rem; font-weight: 400; line-height: 1.6; }
+  .text-body-sm        { font-family: var(--font-body); font-size: 0.875rem; font-weight: 400; line-height: 1.5; }
+
+  /* button styles */
+  .btn-vice-primary {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--vice-accent);
+    background: transparent;
+    color: var(--vice-text);
+    padding: 0.5rem 0;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: pointer;
+    border-radius: 0;
+  }
+
+  .btn-vice-primary:hover {
+    border-bottom-width: 3px;
+    padding-bottom: -0.25rem;
+    color: var(--vice-accent);
+  }
+
+  /* motion utilities */
+  .motion-fade-in {
+    animation: fadeIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    opacity: 0;
+  }
+
+  .motion-scale-up {
+    animation: scaleUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  /* underline animation */
+  .underline-animate {
+    position: relative;
+    text-decoration: none;
+  }
+
+  .underline-animate::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--vice-accent);
+    transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .underline-animate:hover::after {
+    width: 100%;
+  }
+
+  /* parallax effect */
+  .parallax-lg {
+    will-change: transform;
+  }
+}
+
+/* ─── Keyframe Animations ────────────────────────────── */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 /* ─── Base Styles ────────────────────────────────────── */
@@ -53,18 +192,25 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--vice-bg);
   color: var(--vice-text);
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+  letter-spacing: 0.3px;
 }
 
-::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: var(--vice-border); border-radius: 0; }
+::-webkit-scrollbar-thumb:hover { background: var(--vice-accent-light); }
 
-::selection { background: var(--vice-accent); color: white; }
+::selection { background: var(--vice-accent); color: var(--vice-text); }
 
 a { color: inherit; text-decoration: none; }

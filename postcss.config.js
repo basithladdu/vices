@@ -1,2 +1,3 @@
-// Not needed with @tailwindcss/vite plugin — kept as placeholder
+// Tailwind v4 works with @tailwindcss/vite plugin (no PostCSS needed)
+// Empty config — Vite will skip PostCSS processing
 export default {}

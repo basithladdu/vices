@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { FaSearch, FaTimes } from 'react-icons/fa'
-import substances, { TYPE_META, SUBSTANCE_TYPES, searchSubstances } from '../data/substances'
+import substances, { TYPE_META, searchSubstances } from '../data/substances'
 import SubstanceCard from '../components/SubstanceCard'
 import Footer from '../components/Footer'
 
@@ -36,48 +36,64 @@ const Explore = () => {
 
   return (
     <div className="min-h-screen bg-vice-bg pt-20 pb-24">
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">Explore</h1>
-          <p className="text-vice-muted text-sm">
-            Browse {substances.length}+ substances across {Object.keys(TYPE_META).length} categories
+        <motion.div
+          className="mb-12"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <h1 className="text-display-md text-vice-text mb-3">Explore</h1>
+          <p className="text-body-md text-vice-text-muted">
+            {substances.length} substances across {Object.keys(TYPE_META).length} categories
           </p>
-        </div>
+        </motion.div>
 
-        {/* Search */}
-        <div className="relative mb-6">
+        {/* Search Bar */}
+        <motion.div
+          className="relative mb-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.1, duration: 0.5 }}
+        >
           <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-vice-muted text-sm" />
           <input
             type="text"
             placeholder="Search substances, brands, tags..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full pl-11 pr-10 py-3 bg-vice-card border border-vice-border rounded-xl text-white text-sm placeholder:text-vice-muted/50 focus:outline-none focus:border-vice-accent/50 transition-colors"
+            className="w-full pl-11 pr-10 py-3 bg-vice-card border border-vice-border text-vice-text text-body-md placeholder:text-vice-muted focus:outline-none focus:border-vice-accent focus:ring-1 focus:ring-vice-accent/20 transition-all"
           />
           {query && (
             <button
               onClick={() => setQuery('')}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-vice-muted hover:text-white"
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-vice-muted hover:text-vice-text transition-colors"
+              aria-label="Clear search"
             >
-              <FaTimes size={12} />
+              <FaTimes size={14} />
             </button>
           )}
-        </div>
+        </motion.div>
 
-        {/* Type filters */}
-        <div className="flex flex-wrap gap-2 mb-8">
+        {/* Type Filters */}
+        <motion.div
+          className="flex flex-wrap gap-2 mb-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.15, duration: 0.5 }}
+        >
           {Object.entries(TYPE_META).map(([key, meta]) => (
             <button
               key={key}
               onClick={() => setType(key)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 transition-all border ${
+              className={`px-3 py-1.5 text-body-sm font-medium flex items-center gap-2 transition-all border ${
                 activeType === key
-                  ? 'border-white/20 bg-white/10 text-white'
-                  : 'border-vice-border bg-vice-card text-vice-muted hover:text-white hover:border-white/10'
+                  ? 'border-vice-accent bg-vice-accent/10 text-vice-accent'
+                  : 'border-vice-border bg-vice-card text-vice-text hover:border-vice-accent/50 hover:text-vice-accent'
               }`}
             >
-              <span>{meta.icon}</span>
+              <span className="text-lg">{meta.icon}</span>
               {meta.label}
             </button>
           ))}
@@ -87,64 +103,81 @@ const Explore = () => {
                 searchParams.delete('type')
                 setSearchParams(searchParams)
               }}
-              className="px-3 py-1.5 rounded-lg text-xs font-medium text-vice-accent hover:text-white transition-colors"
+              className="px-3 py-1.5 text-body-sm text-vice-accent hover:text-vice-accent-light transition-colors"
             >
-              Clear filter
+              Clear
             </button>
           )}
-        </div>
+        </motion.div>
 
-        {/* Results count */}
-        <p className="text-vice-muted text-xs mb-4">
-          {filtered.length} substance{filtered.length !== 1 ? 's' : ''} found
+        {/* Results Count */}
+        <p className="text-body-sm text-vice-text-muted mb-8">
+          {filtered.length} result{filtered.length !== 1 ? 's' : ''}
         </p>
 
         {/* Grid */}
         {filtered.length > 0 ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+          <motion.div
+            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
             {filtered.map((substance, i) => (
               <motion.div
                 key={substance.id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.02 }}
+                transition={{ delay: i * 0.03 }}
               >
                 <SubstanceCard substance={substance} />
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         ) : (
-          <div className="text-center py-20">
-            <p className="text-vice-muted text-lg mb-2">No substances found</p>
-            <p className="text-vice-muted/50 text-sm">
-              Try a different search or{' '}
+          <motion.div
+            className="text-center py-24"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h2 className="text-heading-lg text-vice-text mb-2">No results found</h2>
+            <p className="text-body-md text-vice-text-muted mb-8">
+              Try different search terms or{' '}
               <a
                 href="https://github.com/basithladdu/vices"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-vice-accent hover:underline"
+                className="text-vice-accent hover:text-vice-accent-light transition-colors underline-animate"
               >
-                contribute to add more
+                contribute on GitHub
               </a>
             </p>
-          </div>
+          </motion.div>
         )}
 
-        {/* Contribute CTA */}
-        <div className="mt-16 text-center p-8 bg-vice-card border border-vice-border rounded-2xl">
-          <h3 className="text-white font-semibold mb-2">Missing something?</h3>
-          <p className="text-vice-muted text-sm mb-4">
-            Vices is open source. Add your favorite substances to the database.
-          </p>
-          <a
-            href="https://github.com/basithladdu/vices"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/5 border border-white/10 rounded-lg text-white text-sm font-medium hover:bg-white/10 transition-all"
+        {/* Contribute Section */}
+        {filtered.length > 0 && (
+          <motion.div
+            className="mt-20 p-8 md:p-12 bg-vice-card border-2 border-vice-border"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
           >
-            Contribute on GitHub
-          </a>
-        </div>
+            <h2 className="text-heading-lg text-vice-text mb-3">Missing something?</h2>
+            <p className="text-body-md text-vice-text-muted mb-6 max-w-md">
+              Vices is open source. Help us expand the database by adding your favorite substances.
+            </p>
+            <a
+              href="https://github.com/basithladdu/vices"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-vice-primary inline-block"
+            >
+              Contribute on GitHub
+            </a>
+          </motion.div>
+        )}
       </div>
 
       <Footer />

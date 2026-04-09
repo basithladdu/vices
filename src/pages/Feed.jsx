@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { FaPlus, FaFire } from 'react-icons/fa'
+import { FaPlus } from 'react-icons/fa'
+import { motion } from 'framer-motion'
 import LogCard from '../components/LogCard'
 import { getSubstanceById } from '../data/substances'
 import Footer from '../components/Footer'
 
-// Demo logs to show when user has no logs yet
 const DEMO_LOGS = [
   {
     id: 'demo-1',
@@ -69,7 +69,6 @@ const DEMO_LOGS = [
   },
 ]
 
-
 const Feed = () => {
   const [logs, setLogs] = useState(() => {
     return JSON.parse(localStorage.getItem('vices_logs') || '[]')
@@ -79,10 +78,7 @@ const Feed = () => {
     return saved.length === 0
   })
 
-  // We could still use useEffect for synchronization if needed, 
-  // but for initial load, initializer is better.
   useEffect(() => {
-    // Synchronize if other tabs change local storage
     const handleStorage = () => {
       const saved = JSON.parse(localStorage.getItem('vices_logs') || '[]')
       setLogs(saved)
@@ -96,57 +92,82 @@ const Feed = () => {
 
   return (
     <div className="min-h-screen bg-vice-bg pt-20 pb-24">
-      <div className="max-w-2xl mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-2xl font-bold text-white">Feed</h1>
-            <p className="text-vice-muted text-sm">
-              {showDemo ? 'Example moments — start logging yours' : `${logs.length} moment${logs.length !== 1 ? 's' : ''} logged`}
-            </p>
+        <motion.div
+          className="mb-16"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="flex items-baseline justify-between gap-8">
+            <div>
+              <h1 className="text-display-md text-vice-text">Your Moments</h1>
+              <p className="text-body-md text-vice-text-muted mt-2">
+                {showDemo ? 'Explore examples — create your own archive' : `${logs.length} moment${logs.length !== 1 ? 's' : ''} recorded`}
+              </p>
+            </div>
+
+            <Link
+              to="/log"
+              className="btn-vice-primary flex items-center gap-2"
+            >
+              <FaPlus className="text-xs" /> Log
+            </Link>
           </div>
 
-          <Link
-            to="/log"
-            className="flex items-center gap-2 px-4 py-2 bg-vice-accent text-white rounded-xl text-sm font-medium hover:bg-vice-accent-dim transition-all"
-          >
-            <FaPlus size={10} /> Log
-          </Link>
-        </div>
+          {showDemo && (
+            <div className="mt-6 border-l-2 border-vice-accent pl-4">
+              <p className="text-vice-accent text-body-md font-medium">
+                Sample moments
+              </p>
+              <p className="text-vice-text-muted text-body-sm mt-1">
+                Log your first moment to begin.
+              </p>
+            </div>
+          )}
+        </motion.div>
 
-        {showDemo && (
-          <div className="mb-6 p-4 bg-vice-accent/5 border border-vice-accent/20 rounded-xl">
-            <p className="text-vice-accent text-sm font-medium flex items-center gap-2">
-              <FaFire size={12} /> These are example logs
-            </p>
-            <p className="text-vice-muted text-xs mt-1">
-              Log your first moment to start building your personal archive.
-            </p>
-          </div>
-        )}
-
-        {/* Logs */}
-        <div className="grid grid-cols-1 gap-4">
-          {displayLogs.map((log) => {
+        {/* Magazine-style Grid */}
+        <div className="grid grid-cols-1 gap-8 mb-12">
+          {displayLogs.map((log, idx) => {
             const substance = getSubstanceById(log.substance_id)
             if (!substance) return null
+
+            // Alternating wider/narrower columns for asymmetrical layout
+            const isWide = idx % 3 !== 2
+
             return (
-              <LogCard key={log.id} log={log} substance={substance} />
+              <motion.div
+                key={log.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1 }}
+                className={`${isWide ? 'md:col-span-2' : ''}`}
+              >
+                <LogCard log={log} substance={substance} />
+              </motion.div>
             )
           })}
         </div>
 
         {!showDemo && logs.length === 0 && (
-          <div className="text-center py-20">
-            <p className="text-vice-muted text-lg mb-2">No moments yet</p>
-            <p className="text-vice-muted/50 text-sm mb-6">Your story starts with the first log.</p>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-24"
+          >
+            <h2 className="text-heading-lg text-vice-text mb-3">No moments yet</h2>
+            <p className="text-body-md text-vice-text-muted mb-8">
+              Your archive begins with a single moment. What's your first?
+            </p>
             <Link
               to="/log"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-vice-accent text-white rounded-xl text-sm font-semibold"
+              className="btn-vice-primary inline-block"
             >
-              <FaPlus size={10} /> Log Your First Moment
+              Log Your First Moment
             </Link>
-          </div>
+          </motion.div>
         )}
       </div>
 

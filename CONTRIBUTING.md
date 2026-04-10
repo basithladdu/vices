@@ -1,15 +1,15 @@
 # Contributing to Vices
 
-Thank you for your interest in contributing to Vices. This document provides guidelines and directions for participating in the project.
+Thanks for wanting to make this better. Here's how we do it.
 
-## Code of Conduct
+## Basic Etiquette
 
-- Be respectful and inclusive.
-- Assume good intent.
-- Help others learn.
-- No harassment, discrimination, or hate speech.
+- Be cool to people.
+- Assume we're all trying to build something good.
+- Share knowledge.
+- No harassment. That's it.
 
-## Getting Started
+## How To Contribute
 
 ### 1. Fork and Clone
 
@@ -19,138 +19,135 @@ cd vices
 npm install
 ```
 
-### 2. Create a Branch
+### 2. Make a Branch
 
 ```bash
-git checkout -b feature/your-feature-name
+git checkout -b feature/add-mood-filters
 # or
-git checkout -b fix/your-bug-fix
+git checkout -b fix/log-card-spacing
 ```
 
-Use descriptive names:
-- `feature/add-mood-filters`
-- `fix/log-card-spacing`
-- `docs/update-readme`
+Branch names matter. Use:
+- `feature/...` for new stuff
+- `fix/...` for bug fixes  
+- `docs/...` for documentation
+- `refactor/...` for code cleanup
 
-### 3. Make Changes
+### 3. Code
 
-- Follow the existing code style.
-- Keep commits atomic and descriptive.
-- Test changes on both mobile and desktop views.
-- Update documentation if necessary.
+Keep it simple. One thing per commit. Test on both phone and desktop before pushing.
 
-### 4. Commit and Push
+### 4. Commit
 
 ```bash
-git add .
 git commit -m "feat: add mood filters to feed"
-git push origin feature/your-feature-name
 ```
 
-We follow conventional commits:
-- `feat:` for new features
-- `fix:` for bug fixes
-- `docs:` for documentation changes
-- `style:` for formatting adjustments
-- `refactor:` for code restructuring
-- `test:` for adding or updating tests
-- `chore:` for build tasks, dependencies, etc.
+We use conventional commits so the changelog auto-generates:
+- `feat:` new feature
+- `fix:` bug fix
+- `docs:` readme/docs update
+- `style:` formatting only (no logic changes)
+- `refactor:` restructure existing code
+- `chore:` dependencies, build stuff
 
-### 5. Submit a Pull Request
+### 5. Push and PR
 
-- Provide a clear and descriptive title.
-- Explain why the change is being made and what specifically was changed.
-- Mention related issues (e.g., `Fixes #123`).
-- Add screenshots for any UI changes.
+```bash
+git push origin feature/add-mood-filters
+```
+
+Then open a PR on GitHub. Tell us:
+- What you changed and why
+- How to test it
+- Screenshots if it's UI
 
 ---
 
-## Types of Contributions
+## What You Can Contribute
 
-### Adding Substances
+### New Substances
 
-You can contribute to the substance database by editing `src/data/substances.js`. We use the following structure:
+The database lives in `src/data/substances.js`. Add items like this:
 
 ```javascript
 {
-  id: 'unique-id',
-  name: 'Substance Name',
-  brand: 'Brand Name',
-  type: SUBSTANCE_TYPES.CIGARETTE, // or ALCOHOL, WEED, etc.
-  subtype: 'Blue / Premium / etc.',
-  manufacturer: 'Company Name',
-  origin: 'Country',
-  strength: 'Light / Medium / Strong',
-  abv: 40, // for alcohol
-  thc: 20, // for weed
-  cbd: 0.5,
-  flavor_notes: ['sweet', 'earthy'],
-  effects: ['relaxed', 'euphoric'], // for weed/psychedelics
-  tags: ['iconic', 'everyday', 'premium'],
+  id: 'marlboro-gold-lights',
+  name: 'Marlboro Gold',
+  brand: 'Marlboro',
+  type: SUBSTANCE_TYPES.CIGARETTE,
+  subtype: 'Lights',
+  manufacturer: 'Philip Morris',
+  origin: 'USA',
+  strength: 'Medium',
+  flavor_notes: ['smooth', 'light'],
+  tags: ['iconic', 'classic'],
   image: 'https://...',
-  description: 'A brief description',
-},
+  description: 'The Marlboro variant everyone knows.',
+}
 ```
 
-Suggested data sources for verification:
-- Cigarettes: FDA Tobacco Products Database, Oregon Brand Directory
-- Alcohol: Untappd, Open Brewery DB
-- Cannabis: Leafly, Weedmaps
-- Psychedelics: Erowid, PsychonautWiki
+Use real sources:
+- **Cigarettes**: FDA Tobacco DB, Oregon Directory
+- **Alcohol**: Untappd, Open Brewery DB
+- **Weed**: Leafly, Weedmaps
+- **Psychedelics**: Erowid, PsychonautWiki
+
+Verify the data. Don't make stuff up.
 
 ### Bug Fixes
 
-1. Ensure an issue exists for the bug.
-2. Keep changes focused and minimal.
-3. Test thoroughly before submitting.
+Found something broken? Create an issue first. Then:
 
-### Feature Requests
+1. Make a minimal fix
+2. Test it on desktop and mobile
+3. Write a clear PR description
+4. Link the issue
 
-For small features like better search or new sorting options, feel free to submit a PR directly. For larger features, please open an issue to discuss the approach with maintainers first.
+### Features
+
+Small features (better search, new filter)? Just send a PR.
+
+Big features (new page, major refactor)? Open an issue first. Let's talk about the approach.
 
 ---
 
 ## Code Style
 
-### JavaScript and React
+### JavaScript & React
 
-- Use `const` by default.
-- Use descriptive variable and function names.
-- Prefer functional components and arrow functions.
-- Destructure props in component definitions.
-- Write comments explaining the "why" rather than the "what".
-- Keep components small and focused.
+- Use `const`, not `let` or `var`
+- Name things clearly (not `x` or `data`)
+- Functional components only
+- Destructure props: `const { user, logs } = props`
+- Comments explain **why**, not **what**
+- Keep components small
 
-### Tailwind CSS
+### CSS (Tailwind)
 
-- Use Tailwind utility classes; avoid inline styles.
-- Follow a mobile-first approach for responsive design.
-- Utilize the existing theme variables for consistency.
-
----
-
-## Testing
-
-Before submitting a PR, please verify:
-- The application works as expected on both mobile and desktop.
-- All links are functional.
-- Forms submit correctly.
-- There are no console errors or warnings.
+- No inline styles. Use Tailwind classes.
+- Mobile-first design
+- Use the color/spacing variables we defined
+- No custom CSS unless you really can't use Tailwind
 
 ---
 
-## Pull Request Checklist
+## Before You PR
 
-- [ ] Branch created from `main`.
-- [ ] Code follows the style guide.
-- [ ] No console errors or warnings.
-- [ ] Tested on mobile and desktop.
-- [ ] Commit messages are clear and follow conventions.
-- [ ] Documentation updated if necessary.
-- [ ] PR description explains the changes clearly.
+Checklist:
+- [ ] Branch is from `main`
+- [ ] Code follows the style above
+- [ ] No console errors
+- [ ] Works on mobile AND desktop
+- [ ] Commits are clear
+- [ ] Updated docs if needed
 
 ---
 
 ## License
 
-By contributing to Vices, you agree that your contributions will be licensed under the MIT License.
+By contributing, you agree your code gets MIT licensed like the rest.
+
+---
+
+Questions? Open an issue. We're here to help.

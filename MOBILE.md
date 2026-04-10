@@ -1,152 +1,131 @@
-# Vices - Mobile App Setup
+# Mobile Apps: iOS and Android
 
-This guide covers building and deploying Vices as a native iOS and Android app using Capacitor.
+Build native Vices apps using Capacitor. This wraps the web app into real iOS and Android projects.
 
-## Prerequisites
+## Before You Start
 
-- Node.js 16+ and npm
-- For iOS: Xcode 13+
-- For Android: Android Studio + SDK
-- Capacitor CLI: `npm install -g @capacitor/cli`
+**You'll need:**
+- Node.js 16+ and npm (you probably have this)
+- **iOS**: Xcode 13+ (Mac only, ~12GB download)
+- **Android**: Android Studio + SDK (Windows/Mac/Linux, ~8GB)
+- Time. First setup takes 30+ minutes
 
-## Installation
+**Don't have a Mac?** iOS is harder without Xcode. Android works on any OS.
 
-1. Install dependencies:
+**Capacitor CLI:**
 ```bash
+npm install -g @capacitor/cli
+```
+
+## Setup
+
+```bash
+# Install dependencies (includes Capacitor)
 npm install
-```
 
-This includes all Capacitor packages:
-- `@capacitor/core` — Core Capacitor framework
-- `@capacitor/device` — Device info and hardware features
-- `@capacitor/geolocation` — GPS/location access
-- `@capacitor/filesystem` — Local file storage
-- `@capacitor/app` — App lifecycle and deep linking
-- `@capacitor/splash-screen` — Splash screen control
-- `@capacitor/status-bar` — Status bar styling
-
-## Building for Mobile
-
-### 1. Build the web assets
-```bash
-npm run build
-```
-
-This creates an optimized production build in the `dist/` folder.
-
-### 2. Initialize Capacitor (first time only)
-```bash
+# First time only: create native projects
 npx cap init
-```
 
-This creates the `ios/` and `android/` native project folders.
-
-### 3. Sync web assets to native projects
-```bash
+# Build web + sync to iOS/Android
 npm run mobile:build
 ```
 
-This automatically builds the web app and syncs assets to both platforms.
+That's it. You now have `ios/` and `android/` folders with real native projects.
 
-## Platform-Specific Setup
+## Development
 
-### iOS Development
+### iOS (Mac only)
 
 ```bash
 npm run mobile:ios
 ```
 
-This opens Xcode with the Vices iOS project. From here you can:
-- Run on simulator: Cmd + R
-- Run on device: Select your device and build
-- Sign the app for distribution
-- Upload to App Store
+Opens Xcode with your Vices project. Then:
 
-**Requirements:**
-- Apple Developer Account (for distribution)
-- Provisioning profiles configured in Xcode
+- **Simulator**: Select a simulator at top, press Play
+- **Real device**: Plug in iPhone, select it, press Play (needs provisioning)
+- **Build settings**: Check target → Build Settings if things break
 
-### Android Development
+**To ship to App Store:**
+1. Create Apple Developer Account ($99/year)
+2. Sign the app in Xcode (Signing & Capabilities tab)
+3. Menu: Product → Archive
+4. Use Organizer to upload
+
+### Android (Windows/Mac/Linux)
 
 ```bash
 npm run mobile:android
 ```
 
-This opens Android Studio with the Vices Android project. From here you can:
-- Run on emulator
-- Run on physical device (USB debugging enabled)
-- Generate signed APK for Google Play
-- Create App Bundle for Play Store
+Opens Android Studio with your Vices project. Then:
 
-**Requirements:**
-- Google Play Developer Account (for distribution)
-- Keystore file for signing releases
+- **Emulator**: Create one in Device Manager, press Play
+- **Real device**: Enable USB debugging in phone settings, plug in, press Play
+- **Gradle issues?** Click "Sync Now" if IDE complains
 
-## Key Features
+**To ship to Google Play:**
+1. Create Google Play Developer Account ($25 one-time)
+2. Generate a release keystore: `keytool -genkey -v -keystore ...`
+3. Build → Generate Signed Bundle/APK
+4. Upload to Play Console
 
-The app uses these Capacitor plugins:
+## Native Plugins
 
-- **Geolocation**: Auto-detect location for log entries
-- **Filesystem**: Cache substance images and log data locally
-- **Device**: Get device info for analytics
-- **Splash Screen**: Custom branded splash on app launch
-- **Status Bar**: Dark status bar matching app theme
+The app includes Capacitor plugins for:
 
-## Environment Configuration
+- **Geolocation** — GPS for auto-detecting log location
+- **Filesystem** — Caching images and data offline
+- **Device** — Phone info for analytics
+- **Splash Screen** — Branded splash on startup
+- **Status Bar** — Dark status bar theme
 
-Update `capacitor.config.json` for platform-specific settings:
+## Dev Workflow
 
-```json
-{
-  "appId": "app.vices.web",
-  "appName": "Vices",
-  "webDir": "dist",
-  "ios": { "contentInset": "automatic" },
-  "plugins": { ... }
-}
+```bash
+# 1. Make changes to React code
+# (no need to rebuild for every change)
+
+# 2. Test in web browser
+npm run dev
+
+# 3. When ready for mobile testing:
+npm run mobile:build
+
+# 4. Run on iOS/Android simulator or device
+# (use Xcode or Android Studio)
+
+# 5. Commit and push when it works
 ```
 
-## Distribution
+## Troubleshooting
 
-### iOS App Store
-1. Build in Xcode: Product → Archive
-2. Validate and upload via Organizer
-3. Submit for review (typically 24-48 hours)
+**"ios/ folder not found"**
+- Run `npx cap init` to create native projects
 
-### Google Play Store
-1. Generate signed APK: Build → Build Bundle(s)/APK(s) → Build APKs
-2. Upload APK to Play Console
-3. Complete store listing and submit for review (typically 24 hours)
+**"dist/ folder not found"**
+- Run `npm run build` first
 
-## Common Issues
+**Location permission denied**
+- iOS: Check Info.plist for NSLocationWhen keys
+- Android: Check AndroidManifest.xml
+- Request user permission on app start
+- Test on real device (simulator GPS is iffy)
 
-**Error: `ios/` folder not found**
-- Run `npx cap init` to initialize Capacitor projects
+**Splash screen hangs**
+- Check timeout in `capacitor.config.json`
+- Ensure `useCapacitor` hook runs on app start
 
-**Error: `dist/` folder not found**
-- Run `npm run build` to build web assets first
+**Build fails randomly**
+- iOS: Try cleaning (Cmd+Shift+K in Xcode)
+- Android: Try `./gradlew clean` in android/ folder
 
-**Geolocation not working on device**
-- Check Info.plist (iOS) or AndroidManifest.xml for location permissions
-- Request user permission when app launches
-- Test on actual device (simulator may not have GPS)
+**Capacitor not syncing**
+- Run `npx cap sync` manually to refresh
 
-**Splash screen not disappearing**
-- Check splash screen timeout in `capacitor.config.json`
-- Ensure app initializes in `useCapacitor` hook
+## Resources
 
-## Development Workflow
-
-1. Make changes to React code
-2. Test in browser: `npm run dev`
-3. Build and sync to mobile: `npm run mobile:build`
-4. Test on device/simulator
-5. Debug native issues in Xcode/Android Studio
-6. Commit and push changes
-
-## Additional Resources
-
-- [Capacitor Documentation](https://capacitorjs.com)
-- [Capacitor Plugins](https://capacitorjs.com/docs/plugins)
-- [iOS Deployment Guide](https://capacitorjs.com/docs/ios)
-- [Android Deployment Guide](https://capacitorjs.com/docs/android)
+- [Capacitor docs](https://capacitorjs.com)
+- [Capacitor plugins](https://capacitorjs.com/docs/plugins)
+- [iOS guide](https://capacitorjs.com/docs/ios)
+- [Android guide](https://capacitorjs.com/docs/android)

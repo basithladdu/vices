@@ -37,7 +37,7 @@ const Home = () => {
                 </blockquote>
 
                 <p className="text-body-lg text-vice-text-muted max-w-lg leading-relaxed">
-                  Log your moments, not your habits. A personal journal for the experiences that shaped you — the late nights, the road trips, the first times, the last drags.
+                  Log your moments, not your habits. A personal journal for the experiences that shaped you: the late nights, the road trips, the first times, the last drags.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4 pt-4">

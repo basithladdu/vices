@@ -1,19 +1,17 @@
 # Contributing to Vices
 
-Thanks for being interested in contributing! 🔥
-
-This document provides guidelines and directions for contributing.
+Thank you for your interest in contributing to Vices. This document provides guidelines and directions for participating in the project.
 
 ## Code of Conduct
 
-- Be respectful and inclusive
-- Assume good intent
-- Help others learn
-- No harassment, discrimination, or hate speech
+- Be respectful and inclusive.
+- Assume good intent.
+- Help others learn.
+- No harassment, discrimination, or hate speech.
 
 ## Getting Started
 
-### 1. Fork & Clone
+### 1. Fork and Clone
 
 ```bash
 git clone https://github.com/YOUR_USERNAME/vices.git
@@ -30,19 +28,18 @@ git checkout -b fix/your-bug-fix
 ```
 
 Use descriptive names:
-- `feature/add-mood-filters` ✅
-- `fix/log-card-spacing` ✅
-- `docs/update-readme` ✅
-- `feat123` ❌
+- `feature/add-mood-filters`
+- `fix/log-card-spacing`
+- `docs/update-readme`
 
 ### 3. Make Changes
 
-- Follow existing code style
-- Keep commits atomic and descriptive
-- Test on mobile/desktop
-- Update docs if needed
+- Follow the existing code style.
+- Keep commits atomic and descriptive.
+- Test changes on both mobile and desktop views.
+- Update documentation if necessary.
 
-### 4. Commit & Push
+### 4. Commit and Push
 
 ```bash
 git add .
@@ -50,29 +47,29 @@ git commit -m "feat: add mood filters to feed"
 git push origin feature/your-feature-name
 ```
 
-Use conventional commits:
-- `feat:` new feature
-- `fix:` bug fix
-- `docs:` documentation
-- `style:` formatting
-- `refactor:` code restructure
-- `test:` tests
-- `chore:` build, deps, etc.
+We follow conventional commits:
+- `feat:` for new features
+- `fix:` for bug fixes
+- `docs:` for documentation changes
+- `style:` for formatting adjustments
+- `refactor:` for code restructuring
+- `test:` for adding or updating tests
+- `chore:` for build tasks, dependencies, etc.
 
-### 5. Submit PR
+### 5. Submit a Pull Request
 
-- Title: Clear, descriptive
-- Description: Why? What changed?
-- Mention related issues (`Fixes #123`)
-- Add screenshots if UI changes
+- Provide a clear and descriptive title.
+- Explain why the change is being made and what specifically was changed.
+- Mention related issues (e.g., `Fixes #123`).
+- Add screenshots for any UI changes.
 
 ---
 
 ## Types of Contributions
 
-### 🚬 Add Substances
+### Adding Substances
 
-Edit `src/data/substances.js`:
+You can contribute to the substance database by editing `src/data/substances.js`. We use the following structure:
 
 ```javascript
 {
@@ -95,179 +92,65 @@ Edit `src/data/substances.js`:
 },
 ```
 
-**Data sources:**
-- Cigarettes: [FDA DB](https://www.fda.gov/tobacco-products), [Oregon Directory](https://www.doj.state.or.us/tobacco-directory/)
-- Alcohol: [Untappd](https://untappd.com), [Open Brewery](https://openbrewerydb.org/)
-- Weed: [Leafly](https://leafly.com), [Weedmaps](https://weedmaps.com)
-- Psychedelics: [Erowid](https://erowid.org), [PsychonautWiki](https://psychonautwiki.org/)
+Suggested data sources for verification:
+- Cigarettes: FDA Tobacco Products Database, Oregon Brand Directory
+- Alcohol: Untappd, Open Brewery DB
+- Cannabis: Leafly, Weedmaps
+- Psychedelics: Erowid, PsychonautWiki
 
-### 🐛 Fix Bugs
+### Bug Fixes
 
-1. Create issue if doesn't exist
-2. Make minimal, focused changes
-3. Test thoroughly
-4. Include before/after if visual
+1. Ensure an issue exists for the bug.
+2. Keep changes focused and minimal.
+3. Test thoroughly before submitting.
 
-### ✨ Add Features
+### Feature Requests
 
-**Small features** (directly):
-- Mood filters
-- Better search
-- New sorting
-
-**Large features** (discuss first):
-- Open issue to discuss approach
-- Get feedback before coding
-- Consider scope & complexity
-
-### 📱 Mobile & Responsive
-
-Test on:
-- iPhone (375px)
-- iPad (768px)
-- Desktop (1280px+)
-
-### 🎨 UI/UX Improvements
-
-- Keep Vices dark aesthetic
-- Use existing colors (vice-accent, vice-gold)
-- Mobile-first approach
-- Test accessibility
-
-### 📚 Documentation
-
-- Update README for new features
-- Add code comments for complex logic
-- Improve setup instructions
-- Fix typos!
-
-### 🌍 Translations
-
-Create `src/i18n/[language].json` with translations for all UI text.
+For small features like better search or new sorting options, feel free to submit a PR directly. For larger features, please open an issue to discuss the approach with maintainers first.
 
 ---
 
 ## Code Style
 
-### JavaScript/React
+### JavaScript and React
 
-```javascript
-// Use const by default
-const name = 'value'
-
-// Descriptive names
-const getUserLogs = () => { }  // ✅
-const getL = () => { }          // ❌
-
-// Functional components
-const MyComponent = () => {
-  return <div>content</div>
-}
-
-// Arrow functions
-const handler = () => { }
-
-// Destructure props
-const LogCard = ({ log, substance }) => { }
-
-// Comments for WHY, not WHAT
-// ✅ Prevent multiple logs same day
-// ❌ Check if log exists
-
-// Keep functions small and focused
-// ✅ 20-30 lines max per component
-```
+- Use `const` by default.
+- Use descriptive variable and function names.
+- Prefer functional components and arrow functions.
+- Destructure props in component definitions.
+- Write comments explaining the "why" rather than the "what".
+- Keep components small and focused.
 
 ### Tailwind CSS
 
-```javascript
-// Use Tailwind classes (no inline styles)
-<div className="px-4 py-3 bg-vice-card rounded-lg">
-  Content
-</div>
-
-// Responsive-first
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-
-// Dark mode vars already set (no light mode needed)
-<div className="text-white bg-vice-bg">
-```
-
-### File Structure
-
-```
-src/
-├── components/
-│   ├── Navbar.jsx
-│   ├── Footer.jsx
-│   └── [Component].jsx
-├── pages/
-│   ├── Home.jsx
-│   └── [Page].jsx
-├── data/
-│   └── substances.js
-├── App.jsx
-└── main.jsx
-```
+- Use Tailwind utility classes; avoid inline styles.
+- Follow a mobile-first approach for responsive design.
+- Utilize the existing theme variables for consistency.
 
 ---
 
 ## Testing
 
-### Manual Testing
-
-- [ ] Works on mobile
-- [ ] Works on desktop
-- [ ] All links work
-- [ ] Forms submit correctly
-- [ ] No console errors
-
-### Test on Devices
-
-```bash
-npm run dev
-# Use local IP to test on phone
-# e.g., http://192.168.1.x:5173
-```
+Before submitting a PR, please verify:
+- The application works as expected on both mobile and desktop.
+- All links are functional.
+- Forms submit correctly.
+- There are no console errors or warnings.
 
 ---
 
 ## Pull Request Checklist
 
-- [ ] Branch created from `main`
-- [ ] Code follows style guide
-- [ ] No console errors/warnings
-- [ ] Tested on mobile
-- [ ] Commit messages are clear
-- [ ] README updated (if needed)
-- [ ] PR description explains changes
-- [ ] Related issue mentioned
+- [ ] Branch created from `main`.
+- [ ] Code follows the style guide.
+- [ ] No console errors or warnings.
+- [ ] Tested on mobile and desktop.
+- [ ] Commit messages are clear and follow conventions.
+- [ ] Documentation updated if necessary.
+- [ ] PR description explains the changes clearly.
 
 ---
 
-## Review Process
+## License
 
-1. **CI Checks**: Lint, format checks pass
-2. **Code Review**: Maintainers review code
-3. **Testing**: Manual testing by team
-4. **Merge**: Squash & merge to main
-5. **Deploy**: Auto-deployed to staging/prod
-
----
-
-## Need Help?
-
-- **Questions?** Open a [Discussion](https://github.com/basithladdu/vices/discussions)
-- **Bug?** Open an [Issue](https://github.com/basithladdu/vices/issues)
-- **Want to discuss?** [Email us](mailto:workwithdevit@gmail.com)
-
----
-
-## Recognition
-
-Contributors are recognized in:
-- README.md
-- GitHub contributors page
-- Releases notes
-
-Thank you for making Vices better! 🔥
+By contributing to Vices, you agree that your contributions will be licensed under the MIT License.

@@ -30,7 +30,7 @@ const About = () => {
         >
           <h2 className="text-2xl font-bold text-white mb-4">About Vices</h2>
           <p className="text-vice-text leading-relaxed mb-4">
-            Vices is an open-source personal memory journal app. It's Letterboxd for moments tied to substances — cigarettes, alcohol, weed, psychedelics, stimulants, and everything in between.
+            Vices is an open-source personal memory journal app. It's Letterboxd for moments tied to substances: cigarettes, alcohol, weed, psychedelics, stimulants, and everything in between.
           </p>
           <p className="text-vice-text leading-relaxed mb-4">
             We believe that the memories attached to these moments matter more than the substances themselves. The late-night conversations, the road trips, the times you understood something new, the moments that shaped who you are.
@@ -52,8 +52,7 @@ const About = () => {
             <h2 className="text-xl font-bold text-white">Built by Devit</h2>
           </div>
           <p className="text-vice-text text-sm mb-4">
-            Vices is an initiative by developers who believe in open-source public infrastructure. Made with{' '}
-            <span className="text-vice-accent">❤️</span> at Devit.
+            Vices is an initiative by developers who believe in open-source public infrastructure. Made by the team at Devit.
           </p>
           <div className="flex flex-wrap gap-3">
             <a
@@ -113,7 +112,7 @@ const About = () => {
         {/* License */}
         <div className="mt-12 text-center">
           <p className="text-vice-muted/50 text-xs">
-            Licensed under MIT. Made with 🔥 by{' '}
+            Licensed under MIT. Built by{' '}
             <a href="https://www.wedevit.in" target="_blank" rel="noopener noreferrer" className="text-vice-muted hover:text-white transition-colors">
               Devit
             </a>

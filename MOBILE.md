@@ -1,4 +1,4 @@
-# Vices — Mobile App Setup
+# Vices - Mobile App Setup
 
 This guide covers building and deploying Vices as a native iOS and Android app using Capacitor.
 
